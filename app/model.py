@@ -62,6 +62,6 @@ class ModuleDIO:
         # Convert the binary string to a list of integers (bits)
         bits = [(int(bit) == 1) for bit in binary_str]
     
-        return bits
+        return bits.reverse()
     
 

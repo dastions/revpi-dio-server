@@ -4,7 +4,7 @@
 ## Aditional Documentation:
 - [Google Drive Dastions](https://drive.google.com/drive/folders/1honehxIuXjCowpb9NmtajVL2zvVSq0VC)
 ## Requirements
-- RevPi Core 3 + Module DIO
+- Run into: RevPi Core 3 + Module DIO
 - Python3 (falcon)
 - [revpimodio2](https://revpimodio.org/en)
 
@@ -23,10 +23,8 @@ $ gunicorn router:api
 ```
 
 ## Methods:
-- `GET /api/inputs`
-- `GET /api/outputs`
-- `POST /api/outputs/:id/`
-- `POST /api/outputs`
+- `GET /api/dio`
+- `POST /api/dio`
 
 **Header:**
 ```
@@ -37,17 +35,15 @@ Content-Type: application/json
 **Body:**
 ```
 {
-	"outputs": {
-        "id": "O_1"
-		"value": 0 or 1
-	}
+    "outpsut": "O_1", "value": "0"
 }
 ```
 
 **Respone:**
 ```
 {
-    
+  "status": 202,
+  "message": "UPDATED"
 }
 ```
 
@@ -88,6 +84,8 @@ $ sudo systemctl start revpi-dio-server.service
 $ sudo systemctl enable revpi-dio-server.service
 $ sudo systemctl restart revpi-dio-server.service
 $ sudo systemctl status revpi-dio-server.service
+
+
 ● revpi-dio-server.service - Gunicorn instance to serve the revpi-dio API LCR MAURI
      Loaded: loaded (/etc/systemd/system/revpi-dio-server.service; enabled; vendor preset: enabled)
      Active: active (running) since Fri 2021-06-25 11:55:47 CEST; 2s ago

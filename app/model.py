@@ -4,7 +4,7 @@ from app.logger import log
 class ModuleDIO:
     def __init__(self):
         # Initialize the RevPiModIO object with autorefresh set to True
-        self.rpi = revpimodio2.RevPiModIO(autorefresh=True)
+        self.rpi = "revpimodio2.RevPiModIO(autorefresh=True)"
     
     def get_inputs(self):
         """

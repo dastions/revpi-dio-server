@@ -1,6 +1,6 @@
 import falcon
-from app.controllers.outputs import OutputsController
-from app.controllers.inputs import InputsController
+from app.controller import ControllerDIO
+
 
 class RedirectionController:
     # get
@@ -11,6 +11,5 @@ class RedirectionController:
 print('=================Server API!=================')
 
 api = falcon.API()
-api.add_route('/api/inputs', InputsController())
-api.add_route('/api/outputs', OutputsController())
+api.add_route('/api/dio', ControllerDIO())
 api.add_route('/', RedirectionController())

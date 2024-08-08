@@ -56,7 +56,7 @@
                 method: 'POST',
                 redirect: 'follow',
                 headers: myHeaders,
-                body: JSON.stringify({ id: output_id, value: value })
+                body: JSON.stringify({ output: output_id, value: value })
             })
             .then(response => response.json())
             .then()

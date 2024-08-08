@@ -1,12 +1,14 @@
 import revpimodio2
 from app.logger import log
 
+INPUTS = 14
+OUTPUTS = 14
 class ModuleDIO:
     def __init__(self):
         # Initialize the RevPiModIO object with autorefresh set to True
         self.rpi = revpimodio2.RevPiModIO(autorefresh=True)
 
-        self.outputs = [f"O_{i}" for i in range(1, 17)]
+        self.outputs = [f"O_{i}" for i in range(1, OUTPUTS+1)]
     
     def get_inputs_list(self):
         """
@@ -55,7 +57,7 @@ class ModuleDIO:
 
     def int_to_bits_list(self, value):
         # Get the binary representation of the integer, strip the '0b' prefix, and fill with leading zeros up to 8 bits
-        binary_str = bin(value)[2:].zfill(8)
+        binary_str = bin(value)[2:].zfill(INPUTS)
     
         # Convert the binary string to a list of integers (bits)
         bits = [int(bit) for bit in binary_str]

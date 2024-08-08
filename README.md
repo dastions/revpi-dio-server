@@ -66,7 +66,7 @@ Group=www-data
 PIDFile=/tmp/gunicorn.pid
 Environment="PATH=/home/<customer>/mauri/revpi-dio-server/venv/bin"
 WorkingDirectory=/home/<customer>/mauri/revpi-dio-server
-ExecStart=/home/<customer>/mauri/revpi-dio-server/venv/bin/gunicorn --workers 1 -b 0.0.0.0:8000 router:api
+ExecStart=/home/<customer>/mauri/revpi-dio-server/venv/bin/gunicorn --workers 1 -b 0.0.0.0:8899 router:api
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 [Install]

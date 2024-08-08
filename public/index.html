@@ -118,7 +118,7 @@
                     li.append(label);
                     input.append(`O_${index_1}`);
                     input.onchange = () => {
-                        postOutput(`O_${index_1}`);
+                        postOutput(`O_${index_1}`, api_key);
                     }
                     document.getElementById(`outputs-list`).append(li)
                 });

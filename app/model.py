@@ -4,19 +4,41 @@ from app.logger import log
 class ModuleDIO:
     def __init__(self):
         # Initialize the RevPiModIO object with autorefresh set to True
-        self.rpi = "revpimodio2.RevPiModIO(autorefresh=True)"
+        self.rpi = revpimodio2.RevPiModIO(autorefresh=True)
+
+        self.outputs = [f"O_{i}" for i in range(1, 17)]
+    
+    def get_inputs_list(self):
+        """
+        Retrieve the current input values (array).
+        """
+        inputs = self.get_inputs()
+        
+        return self.int_to_bits_list(inputs)
     
     def get_inputs(self):
         """
-        Retrieve the current input values.
+        Retrieve the current input values (int).
         """
-        return self.rpi.io.get_input_values()
+        inputs = self.rpi.io.Input.get_intvalue()
+        
+        return inputs
     
-    def get_outputs(self):
+    def get_outputs_list(self):
         """
         Retrieve the current output values.
         """
-        return self.rpi.io.get_output_values()
+        results=[]
+        for output in self.outputs:
+            
+            get_output_value = getattr(self.rpi.io, output, None)
+            if callable(get_output_value):
+                value = get_output_value()
+                results.append(value)
+            else:
+                results.append('E')
+
+        return results
     
     def set_output(self, id: str, value: bool):
         """
@@ -26,13 +48,18 @@ class ModuleDIO:
         id (str): The identifier for the output to set.
         value (bool): The value to set the output to.
         """
+
         self.rpi.io[id].value = value
 
-        return True
+        return { f"{id}": value}
 
-# Example usage
-# module = ModuleDIO()
-# inputs = module.get_inputs()
-# outputs = module.get_outputs()
-# module.set_output('O_1', 1)
+    def int_to_bits_list(value):
+        # Get the binary representation of the integer, strip the '0b' prefix, and fill with leading zeros up to 8 bits
+        binary_str = bin(value)[2:].zfill(8)
+    
+        # Convert the binary string to a list of integers (bits)
+        bits = [int(bit) for bit in binary_str]
+    
+        return bits
+    
 

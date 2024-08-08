@@ -29,8 +29,8 @@ class ControllerDIO:
 
         # filter = req.get_param('name', default=None)
         
-        inputs  = self.module_dio.get_inputs()
-        outputs = self.module_dio.get_outputs()
+        inputs  = self.module_dio.get_inputs_list()
+        outputs = self.module_dio.get_outputs_list()
         
         
         resp.status = falcon.HTTP_200
@@ -49,17 +49,20 @@ class ControllerDIO:
             id = req.media['output']
             value = req.media['value']
 
-            if not (id or value):
+            if not (isinstance(value, bool) and isinstance(id, str)):
                 raise falcon.HTTPBadRequest(
                     title="Missing parameter",
-                    description="The 'output' and 'value' parameters are required."
+                    description="The output (str) and value (bool) parameters are required."
                 )
-        
-            self.module_dio.set_output(id, value)
+            
+            result = self.module_dio.set_output(id, value)
+            
             response = {
-                "status": 202,
-                "message": "UPDATED"
+                'status': 202,
+                'message': "UPDATED",
+                'result': result
             }
+
         except Exception as err:
             log("ERROR - on_post - ", str(err))
 

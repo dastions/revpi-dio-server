@@ -12,7 +12,7 @@ class RedirectionController:
 print('=================Server API!=================')
 
 api = falcon.API()
-# api.add_route('/api/dio', ControllerDIO())
+api.add_route('/api/dio', ControllerDIO())
 api.add_route('/', RedirectionController())
 api.add_route('/sat', MainView())
 api.add_route('/public/{filename}', StaticFileResource(directory='public'))

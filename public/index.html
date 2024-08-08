@@ -66,8 +66,7 @@
             myHeaders.append("X-API-KEY", api_key);
             
             
-            fetch('http://192.168.1.26:8899/api/dio', {
-            // fetch(`${location.origin}/api/dio/${type}`, {
+            fetch(`${location.origin}/api/dio`, {
                 method: 'GET',
                 redirect: 'follow',
                 headers: myHeaders
@@ -75,7 +74,8 @@
             .then(response => response.json())
             .then(result => {
                 console.log(result)
-                document.getElementById(`${type}-list`).innerHTML = ''
+                document.getElementById(`output-list`).innerHTML = ''
+                document.getElementById(`input-list`).innerHTML = ''
                 // if (result.data) {
                 //     result.data.split('').forEach((element, index) => {
                 //         // <li><label for="checkbox1"><input id="checkbox1" name="checkbox" type="checkbox"> I0</label></li>

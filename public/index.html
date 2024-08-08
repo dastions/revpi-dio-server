@@ -41,19 +41,21 @@
     <footer>
         <p>Cierra esta web si no la usas! esta puede afecta al rendimiento del software</p>
         <br>
-        <p>Dastions IoT SAT website.</p>
+        <p><a href="https://www.dastions.com" target="_blank">Dastions</a> IoT SAT website.</p>
     </footer>
     </body>
     <script>
-        function postOutput(output_id) {
+        function postOutput(output_id, api_key) {
             let value = document.getElementById(`inputs-list`).checked;
+            
+            const myHeaders = new Headers();
+            myHeaders.append("X-API-KEY", api_key);
+            myHeaders.append("Content-Type", "application/json");
             
             fetch(`${location.origin}/api/dio`, {
                 method: 'POST',
                 redirect: 'follow',
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: myHeaders,
                 body: JSON.stringify({ id: output_id, value: value })
             })
             .then(response => response.json())
@@ -66,7 +68,6 @@
         function getDigitalSignal(api_key) {
             const myHeaders = new Headers();
             myHeaders.append("X-API-KEY", api_key);
-            
             
             fetch(`${location.origin}/api/dio`, {
                 method: 'GET',

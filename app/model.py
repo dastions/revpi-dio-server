@@ -1,5 +1,5 @@
 import revpimodio2
-from app.logger import log
+
 
 INPUTS = 14
 OUTPUTS = 14

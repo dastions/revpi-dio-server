@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Minified version -->
+        <!-- <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css"> -->
+        <link rel="stylesheet" href="/public/styles.min.css">
+        <title>SAT View IoT</title>
+        <style>
+            ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            }
+
+            li {
+            float: left;
+            }
+        </style>
+    </head>
+    <body>
+    <header>
+        <h1>IoT Dashboard</h1>
+    </header>
+    <main>
+        <h5>Inputs</h5>
+        <ul id="inputs-list">
+            <p>Loading ....</p>
+        </ul>   
+        
+        <h5>Outputs</h5>
+        <ul id="outputs-list">
+            <p>Loading ....</p>
+        </ul> 
+            <input id="api-key" type="password" placeholder="Password">
+    </main>
+    
+    <footer>
+        <p>Cierra esta web si no la usas! esta puede afecta al rendimiento del software</p>
+        <br>
+        <p>Dastions IoT SAT website.</p>
+    </footer>
+    </body>
+    <script>
+        function postOutputs(relay) {
+
+            fetch(`${location.origin}/api/dio/switch`, {
+                method: 'POST',
+                redirect: 'follow',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({output: relay})
+            })
+            .then(response => response.json())
+            .then()
+            .catch()
+                        
+            return true;
+        }
+
+        function getDigitalSignal(api_key) {
+            const myHeaders = new Headers();
+            myHeaders.append("X-API-KEY", api_key);
+            
+            
+            fetch('http://192.168.1.26:8899/api/dio', {
+            // fetch(`${location.origin}/api/dio/${type}`, {
+                method: 'GET',
+                redirect: 'follow',
+                headers: myHeaders
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                document.getElementById(`${type}-list`).innerHTML = ''
+                // if (result.data) {
+                //     result.data.split('').forEach((element, index) => {
+                //         // <li><label for="checkbox1"><input id="checkbox1" name="checkbox" type="checkbox"> I0</label></li>
+                //         let li    = document.createElement("li");
+                //         let label = document.createElement("label");
+                //         label.setAttribute("for", `i_${index}`);
+                //         label.append(`_${index}:`)
+                //         let input = document.createElement("input");
+                //         input.setAttribute("id", `i_${index}`);
+                //         input.setAttribute("__value", index);
+                //         input.setAttribute("type", "checkbox");
+                //         if (type == "inputs") 
+                //             input.setAttribute("disabled", "true");
+
+                //         if (type == "outputs")
+                //             input.onchange = () => {
+                //                 postOutputs(`${index}`);
+                //             }
+
+                //         if (element == '1')
+                //             input.setAttribute("checked", "checked");
+                            
+                        
+                //         label.append(input);
+                //         li.append(label);
+                //         input.append(`I_${index}`);
+                        
+                //         document.getElementById(`${type}-list`).append(li)
+                //     });
+                // }
+                // result?.data
+            })
+            .catch(error => console.log('error', error));
+        }
+
+
+        setInterval(() => {
+            let api_key = document.getElementById('api-key').value;
+            getDigitalSignal(api_key);
+        }, 1000);
+
+    </script>
+</html>

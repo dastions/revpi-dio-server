@@ -53,7 +53,7 @@ class ModuleDIO:
 
         return { f"{id}": value}
 
-    def int_to_bits_list(value):
+    def int_to_bits_list(self, value):
         # Get the binary representation of the integer, strip the '0b' prefix, and fill with leading zeros up to 8 bits
         binary_str = bin(value)[2:].zfill(8)
     

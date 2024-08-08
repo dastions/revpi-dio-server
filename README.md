@@ -1,4 +1,4 @@
-# RevPi DIO Module API
+# RevPi DIO Module API (Public Repository)
 - app: falcon api (python)
 
 ## Aditional Documentation:

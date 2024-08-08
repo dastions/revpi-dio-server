@@ -15,7 +15,7 @@ class ControllerDIO:
             if not (req.headers['X-API-KEY']):
                 raise falcon.HTTPForbidden('Forbidden', 'License not found')
             for license in data["licenses"]:
-                if req.headers['X-API-KEY'] in license.get('key'):
+                if req.headers['X-API-KEY'] == license.get('key'):
                     return True
             
             raise falcon.HTTPForbidden('Forbidden', 'License not found')

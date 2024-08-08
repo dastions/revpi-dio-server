@@ -34,7 +34,8 @@
         <ul id="outputs-list">
             <p>Loading ....</p>
         </ul> 
-            <input id="api-key" type="password" placeholder="Password">
+        <h5>Api Key</h5>
+        <input id="api-key" type="password" placeholder="Password">
     </main>
     
     <footer>
@@ -44,15 +45,16 @@
     </footer>
     </body>
     <script>
-        function postOutputs(relay) {
-
-            fetch(`${location.origin}/api/dio/switch`, {
+        function postOutput(output_id) {
+            let value = document.getElementById(`inputs-list`).checked;
+            
+            fetch(`${location.origin}/api/dio`, {
                 method: 'POST',
                 redirect: 'follow',
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({output: relay})
+                body: JSON.stringify({ id: output_id, value: value })
             })
             .then(response => response.json())
             .then()
@@ -73,40 +75,52 @@
             })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
-                document.getElementById(`output-list`).innerHTML = ''
-                document.getElementById(`input-list`).innerHTML = ''
-                // if (result.data) {
-                //     result.data.split('').forEach((element, index) => {
-                //         // <li><label for="checkbox1"><input id="checkbox1" name="checkbox" type="checkbox"> I0</label></li>
-                //         let li    = document.createElement("li");
-                //         let label = document.createElement("label");
-                //         label.setAttribute("for", `i_${index}`);
-                //         label.append(`_${index}:`)
-                //         let input = document.createElement("input");
-                //         input.setAttribute("id", `i_${index}`);
-                //         input.setAttribute("__value", index);
-                //         input.setAttribute("type", "checkbox");
-                //         if (type == "inputs") 
-                //             input.setAttribute("disabled", "true");
+                document.getElementById(`inputs-list`).innerHTML = '';
+                result.inputs.forEach((value, index) => {
+                // <li><label for="checkbox1"><input id="checkbox1" name="checkbox" type="checkbox"> I0</label></li>
+                    let index_1 = index + 1;
+                    let li    = document.createElement("li");
+                    let label = document.createElement("label");
+                    label.setAttribute("for", `I_${index_1}`);
+                    label.append(`${index_1}:`)
+                    let input = document.createElement("input");
+                    input.setAttribute("id", `I_${index_1}`);
+                    input.setAttribute("__value", index_1);
+                    input.setAttribute("type", "checkbox");
+                    input.setAttribute("disabled", "true");
+                    if (value)
+                        input.setAttribute("checked", "checked");
+                    
+                    label.append(input);
+                    li.append(label);
+                    input.append(`I_${index_1}`);
+                    
+                    document.getElementById(`inputs-list`).append(li)
+                });
 
-                //         if (type == "outputs")
-                //             input.onchange = () => {
-                //                 postOutputs(`${index}`);
-                //             }
-
-                //         if (element == '1')
-                //             input.setAttribute("checked", "checked");
-                            
-                        
-                //         label.append(input);
-                //         li.append(label);
-                //         input.append(`I_${index}`);
-                        
-                //         document.getElementById(`${type}-list`).append(li)
-                //     });
-                // }
-                // result?.data
+                document.getElementById(`outputs-list`).innerHTML = '';
+                result.outputs.forEach((value, index) => {
+                // <li><label for="checkbox1"><input id="checkbox1" name="checkbox" type="checkbox"> I0</label></li>
+                    let index_1 = index + 1;
+                    let li    = document.createElement("li");
+                    let label = document.createElement("label");
+                    label.setAttribute("for", `O_${index_1}`);
+                    label.append(`${index_1}:`)
+                    let input = document.createElement("input");
+                    input.setAttribute("id", `O_${index_1}`);
+                    input.setAttribute("__value", index_1);
+                    input.setAttribute("type", "checkbox");
+                    if (value)
+                        input.setAttribute("checked", "checked");
+                    
+                    label.append(input);
+                    li.append(label);
+                    input.append(`O_${index_1}`);
+                    input.onchange = () => {
+                        postOutput(`O_${index_1}`);
+                    }
+                    document.getElementById(`outputs-list`).append(li)
+                });
             })
             .catch(error => console.log('error', error));
         }

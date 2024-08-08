@@ -60,7 +60,7 @@ class ModuleDIO:
         binary_str = bin(value)[2:].zfill(INPUTS)
     
         # Convert the binary string to a list of integers (bits)
-        bits = [int(bit) for bit in binary_str]
+        bits = [bool(bit) for bit in binary_str]
     
         return bits
     
